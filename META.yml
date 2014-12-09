@@ -1,0 +1,38 @@
+---
+abstract: 'Public transport graphing'
+author:
+  - 'Erik Carlsson <info@code301.com>'
+build_requires: {}
+configure_requires:
+  Module::Build::Tiny: '0.039'
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 5.020, CPAN::Meta::Converter version 2.143240'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: '1.4'
+name: Map-Metro
+no_index:
+  directory:
+    - t
+    - xt
+    - inc
+    - share
+    - eg
+    - examples
+requires:
+  Eponymous::Hash: '0'
+  Graph: '0'
+  List::AllUtils: '0'
+  List::Compare: '0'
+  Moops: '0'
+  Moose: '0'
+  MooseX::App: '0'
+  MooseX::AttributeShortcuts: '0'
+  String::Trim: '0'
+  Syntax::Keyword::Junction: '0'
+  Throwable::X: '0'
+  Types::Path::Tiny: '0'
+  experimental: '0'
+  perl: '5.020000'
+version: '0.1494'
