@@ -3,7 +3,7 @@ use warnings;
 
 # Insired by Throwable::X
 package Map::Metro::Exception {
-$Map::Metro::Exception::VERSION = '0.1499';
+$Map::Metro::Exception::VERSION = '0.1500';
 use Moose::Role;
     use Throwable::X::Types;
 

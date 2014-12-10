@@ -3,6 +3,7 @@ abstract: 'Public transport graphing'
 author:
   - 'Erik Carlsson <info@code301.com>'
 build_requires:
+  Syntax::Collector: '0'
   Test::NoTabs: '0'
 configure_requires:
   Module::Build::Tiny: '0.039'
@@ -38,4 +39,4 @@ requires:
   Types::Path::Tiny: '0'
   experimental: '0'
   perl: '5.020000'
-version: '0.1499'
+version: '0.1500'
