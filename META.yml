@@ -30,6 +30,7 @@ requires:
   Moose: '0'
   MooseX::App: '0'
   MooseX::AttributeShortcuts: '0'
+  MooseX::Object::Pluggable: '0'
   String::Trim: '0'
   Syntax::Collector: '0'
   Syntax::Keyword::Junction: '0'
@@ -37,4 +38,4 @@ requires:
   Types::Path::Tiny: '0'
   experimental: '0'
   perl: '5.020000'
-version: '0.1498'
+version: '0.1499'
