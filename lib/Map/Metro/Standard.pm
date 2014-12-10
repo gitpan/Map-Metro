@@ -2,7 +2,7 @@ use 5.20.0;
 use warnings;
 
 package Map::Metro::Standard {
-$Map::Metro::Standard::VERSION = '0.1494';
+$Map::Metro::Standard::VERSION = '0.1495';
 use Syntax::Collector q/
         use feature 0 ':5.20';
         use warnings 0;
