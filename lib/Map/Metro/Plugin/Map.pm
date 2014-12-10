@@ -1,5 +1,5 @@
 package Map::Metro::Plugin::Map;
-$Map::Metro::Plugin::Map::VERSION = '0.1495';
+$Map::Metro::Plugin::Map::VERSION = '0.1496';
 1;
 
 =encoding utf-8
@@ -51,7 +51,7 @@ Map::Metro::Plugin::Map - How to make your own map
 
 =head1 DESCRIPTION
 
-It is straightforward to create a map file. It consists of three parts:
+It is straightforward to create a map file. It consists of four parts:
 
 =head2 --stations
 

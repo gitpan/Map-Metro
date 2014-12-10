@@ -1,5 +1,9 @@
 Revision history for Map-Metro
 
+0.1496 2014-12-10T14:24:35Z CET
+ [Documentation]
+ - Typo
+
 0.1495 2014-12-10T13:12:02Z CET
  [API Changes]
  - Renamed get_route() in MM::Graph to routing_for().
