@@ -1,5 +1,5 @@
 package Map::Metro::Plugin::Map;
-$Map::Metro::Plugin::Map::VERSION = '0.1496';
+$Map::Metro::Plugin::Map::VERSION = '0.1497';
 1;
 
 =encoding utf-8
