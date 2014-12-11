@@ -2,7 +2,7 @@ use 5.20.0;
 use Map::Metro::Standard;
 
 package Map::Metro {
-$Map::Metro::VERSION = '0.1500';
+$Map::Metro::VERSION = '0.1501';
 use Moose;
     with 'MooseX::Object::Pluggable';
     use aliased 'Map::Metro::Exception::IllegalConstructorArguments';

@@ -1,5 +1,9 @@
 package Map::Metro::Plugin::Map;
-$Map::Metro::Plugin::Map::VERSION = '0.1500';
+$Map::Metro::Plugin::Map::VERSION = '0.1501';
+use Moose::Role;
+
+with 'MooseX::Object::Pluggable';
+
 1;
 
 =encoding utf-8
