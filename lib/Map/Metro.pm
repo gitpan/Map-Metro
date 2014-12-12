@@ -2,13 +2,14 @@ use 5.20.0;
 use Map::Metro::Standard;
 
 package Map::Metro {
-$Map::Metro::VERSION = '0.1600';
+$Map::Metro::VERSION = '0.1700';
 use Moose;
-    with 'MooseX::Object::Pluggable';
-    use aliased 'Map::Metro::Exception::IllegalConstructorArguments';
+    use Module::Pluggable search_path => ['Map::Metro::Plugin::Map'], require => 1, sub_name => 'system_maps';
     use MooseX::AttributeShortcuts;
+    use aliased 'Map::Metro::Exception::IllegalConstructorArguments';
     use Types::Standard -types;
     use Types::Path::Tiny -types;
+    use List::AllUtils 'any';
     use experimental qw/postderef signatures/;
 
     use Map::Metro::Graph;
@@ -62,18 +63,22 @@ use Moose;
         if(exists $args{'map'} && !ArrayRef->check($args{'map'})) {
             $args{'map'} = [$args{'map'}];
         }
+        if(exists $args{'hooks'} && !ArrayRef->check($args{'hooks'})) {
+            $args{'hooks'} = [$args{'hooks'}];
+        }
 
         return $class->$orig(%args);
     };
 
     sub BUILD($self, @args) {
+
         if($self->has_map) {
-            my $metromap = $self->get_map(0);
-            $self->load_plugin($metromap);
+            my @system_maps = map { s{^Map::Metro::Plugin::Map::}{}; $_ } $self->system_maps;
 
-            my $filemethod = $self->decamelize($metromap);
-
-            $self->filepath($self->$filemethod);
+            if(any { $_ eq $self->get_map(0) } @system_maps) {
+                my $mapclass = 'Map::Metro::Plugin::Map::'.$self->get_map(0);
+                $self->filepath($mapclass->new->mapfile);
+            }
         }
     }
 
@@ -170,52 +175,47 @@ Returns an array reference containing the names of all Map::Metro maps installed
 
 =head2 What is a unique path?
 
-The following rules is a guideline:
+The following rules are a guideline:
 
 If the starting station and finishing station...
 
-=over 4
+...is on the same line there will be no transfers to other lines.
 
-=item ...is on the same line there will be no transfers to other lines.
+...shares multiple lines (e.g., both stations are on both line 2 and 4), each line constitutes a route.
 
-=item ...shares multiple lines (e.g., both stations are on both line 2 and 4), each line constitutes a route.
+...are on different lines a transfer will take place at a shared station. No matter how many shared stations there are, there will only be one route returned (but which transfer station is used can differ between queries).
 
-=item ...are on different lines a transfer will take place at a shared station. No matter how many shared stations there are, there will only be one route returned (but which transfer station is used can differ between queries).
-
-=item ...has no shared stations, the shortest route/routes will be returned.
-
-=back
+...has no shared stations, the shortest route/routes will be returned.
 
 
 =head1 MORE INFORMATION
 
-=over 4
+L<Map::Metro::Graph> - How to use graph object.
 
-=item L<Map::Metro::Graph> - What to do with the graph object. This is where it happens.
+L<Map::Metro::Plugin::Map> - How to make your own maps.
 
-=item L<Map::Metro::Plugin::Map> - How to make your own maps.
+L<Map::Metro::Hook> - How to extend Map::Metro via hooks/events.
 
-=item L<Map::Metro::Cmd> - A guide to the command line application.
+L<Map::Metro::Cmd> - A guide to the command line application.
 
-=item L<Map::Metro::Graph::Connection> - Defines a MMG::Connection.
+L<Map::Metro::Graph::Connection> - Defines a MMG::Connection.
 
-=item L<Map::Metro::Graph::Line> - Defines a MMG::Line.
+L<Map::Metro::Graph::Line> - Defines a MMG::Line.
 
-=item L<Map::Metro::Graph::LineStation> - Defines a MMG::LineStation.
+L<Map::Metro::Graph::LineStation> - Defines a MMG::LineStation.
 
-=item L<Map::Metro::Graph::Route> - Defines a MMG::Route.
+L<Map::Metro::Graph::Route> - Defines a MMG::Route.
 
-=item L<Map::Metro::Graph::Routing> - Defines a MMG::Routing.
+L<Map::Metro::Graph::Routing> - Defines a MMG::Routing.
 
-=item L<Map::Metro::Graph::Segment> - Defines a MMG::Segment.
+L<Map::Metro::Graph::Segment> - Defines a MMG::Segment.
 
-=item L<Map::Metro::Graph::Station> - Defines a MMG::Station.
+L<Map::Metro::Graph::Station> - Defines a MMG::Station.
 
-=item L<Map::Metro::Graph::Step> - Defines a MMG::Step.
+L<Map::Metro::Graph::Step> - Defines a MMG::Step.
 
-=item L<Map::Metro::Graph::Transfer> - Defines a MMG::Transfer.
+L<Map::Metro::Graph::Transfer> - Defines a MMG::Transfer.
 
-=back
 
 =head2 Hierarchy
 

@@ -1,8 +1,12 @@
 package Map::Metro::Plugin::Map;
-$Map::Metro::Plugin::Map::VERSION = '0.1600';
+$Map::Metro::Plugin::Map::VERSION = '0.1700';
 use Moose::Role;
+use Types::Path::Tiny 'AbsPath';
 
-with 'MooseX::Object::Pluggable';
+has mapfile => (
+    is => 'ro',
+    isa => AbsPath,
+);
 
 1;
 

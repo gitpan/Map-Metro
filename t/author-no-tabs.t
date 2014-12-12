@@ -46,6 +46,7 @@ my @files = (
     'lib/Map/Metro/Graph/Transfer.pm',
     'lib/Map/Metro/Hook.pm',
     'lib/Map/Metro/Plugin/Hook/PrettyPrinter.pm',
+    'lib/Map/Metro/Plugin/Hook/StreamStations.pm',
     'lib/Map/Metro/Plugin/Map.pm',
     'lib/Map/Metro/Shim.pm',
     'lib/Map/Metro/Standard.pm',

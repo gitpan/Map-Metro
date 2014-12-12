@@ -1,13 +1,13 @@
 use Map::Metro::Standard;
 
 package Map::Metro::Emitter {
-$Map::Metro::Emitter::VERSION = '0.1600';
+$Map::Metro::Emitter::VERSION = '0.1700';
 use Moose;
     use Kavorka;
     use List::AllUtils 'none';
     use Types::Standard -types;
 
-    use Module::Pluggable search_path => ['Map::Metro::Plugin::Hook'], require => 1, asdf => 'new';
+    use Module::Pluggable search_path => ['Map::Metro::Plugin::Hook'], require => 1, sub_name => 'found_plugins';
 
     has wanted_hook_plugins => (
         is => 'ro',
@@ -22,9 +22,19 @@ use Moose;
         isa => ArrayRef,
         traits => ['Array'],
         handles => {
-            add_registered => 'push',
-            all_registered => 'elements',
-            filter_registered => 'grep',
+            add_registered_hook => 'push',
+            all_registered_hooks => 'elements',
+            filter_registered_hooks => 'grep',
+        },
+    );
+    has plugins => (
+        is => 'rw',
+        isa => HashRef,
+        traits => ['Hash'],
+        handles => {
+            add_plugin => 'set',
+            get_plugin => 'get',
+            plugin_names => 'keys',
         },
     );
 
@@ -32,11 +42,13 @@ use Moose;
         my $self = shift;
 
         PLUGIN:
-        foreach my $pluginname ($self->plugins) {
+        foreach my $pluginname ($self->found_plugins) {
             my $actual = $pluginname =~ s{^Map::Metro::Plugin::Hook::}{}r;
             next PLUGIN if none { $_ eq $actual } $self->all_wanted_hook_plugins;
+
             my $plugin = $pluginname->new;
             $self->register($plugin);
+            $self->add_plugin($actual => $plugin);
         }
     }
     method register($plugin) {
@@ -44,16 +56,19 @@ use Moose;
 
         foreach my $event (keys %hooks_list) {
             my $hook = Map::Metro::Hook->new(event => $event, action => $hooks_list{ $event }, plugin => $plugin);
-            $self->add_registered($hook);
+            $self->add_registered_hook($hook);
         }
     }
 
-    method routing_completed($routing) {
-        $self->emit('routing_completed', $routing);
+    method before_add_station($station) {
+        $self->emit('before_add_station', $station);
+    }
+    method before_add_routing($routing) {
+        $self->emit('before_add_routing', $routing);
     }
 
     method emit($event, @args) {
-        my @hooks = $self->filter_registered(sub { $_->event eq $event });
+        my @hooks = $self->filter_registered_hooks(sub { $_->event eq $event });
 
         foreach my $hook (@hooks) {
             $hook->action->($hook->plugin, @args);

@@ -40,4 +40,4 @@ requires:
   Types::Path::Tiny: '0'
   experimental: '0'
   perl: '5.020000'
-version: '0.1600'
+version: '0.1700'
