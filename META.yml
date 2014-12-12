@@ -27,6 +27,7 @@ requires:
   Graph: '0'
   List::AllUtils: '0'
   List::Compare: '0'
+  Module::Pluggable: '0'
   Moops: '0'
   Moose: '0'
   MooseX::App: '0'
@@ -39,4 +40,4 @@ requires:
   Types::Path::Tiny: '0'
   experimental: '0'
   perl: '5.020000'
-version: '0.1501'
+version: '0.1600'

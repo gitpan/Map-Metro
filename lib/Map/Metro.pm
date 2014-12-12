@@ -2,7 +2,7 @@ use 5.20.0;
 use Map::Metro::Standard;
 
 package Map::Metro {
-$Map::Metro::VERSION = '0.1501';
+$Map::Metro::VERSION = '0.1600';
 use Moose;
     with 'MooseX::Object::Pluggable';
     use aliased 'Map::Metro::Exception::IllegalConstructorArguments';
@@ -28,37 +28,48 @@ use Moose;
         default => undef,
         init_arg => undef,
     );
+    has hooks => (
+        is => 'ro',
+        isa => ArrayRef[ Str ],
+        traits => ['Array'],
+        default => sub { [] },
+        handles => {
+            all_hooks => 'elements',
+        },
+    );
+    has _plugin_ns => (
+        is => 'ro',
+        isa => Str,
+        default => 'Plugin::Map',
+        init_arg => undef,
+    );
 
     around BUILDARGS => sub {
         my ($orig, $class, @args) = @_;
-        if(   (scalar @args == 2 && ArrayRef->check($args[1]) && scalar $args[1]->@* != 1)
-           || (scalar @args > 2)) {
-
-            IllegalConstructorArguments->throw;
-        }
-
-        my %args = scalar @args == 2 ? @args : ();
-
+        my %args;
         if(scalar @args == 1) {
             $args{'map'} = shift @args;
         }
-
-        if(scalar keys %args == 1) {
-            if(ArrayRef->check($args{'map'})) {
-                return $class->$orig(%args);
-            }
-            elsif(Str->check($args{'map'})) {
-                $args{'map'} = [ $args{'map'} ];
-                return $class->$orig(%args);
-            }
+        elsif(scalar @args % 2 != 0) {
+            my $map = shift @args;
+            %args = @args;
+            $args{'map'} = $map;
         }
-        return $class->$orig;
+        else {
+            %args = @args;
+        }
+
+        if(exists $args{'map'} && !ArrayRef->check($args{'map'})) {
+            $args{'map'} = [$args{'map'}];
+        }
+
+        return $class->$orig(%args);
     };
 
     sub BUILD($self, @args) {
         if($self->has_map) {
             my $metromap = $self->get_map(0);
-            $self->load_plugin('Map::'.$metromap);
+            $self->load_plugin($metromap);
 
             my $filemethod = $self->decamelize($metromap);
 
@@ -75,7 +86,7 @@ use Moose;
     }
 
     sub parse($self) {
-        return Map::Metro::Graph->new(filepath => $self->filepath)->parse;
+        return Map::Metro::Graph->new(filepath => $self->filepath, wanted_hook_plugins => [$self->all_hooks])->parse;
     }
 
     sub available_maps($self) {
@@ -99,15 +110,14 @@ Map::Metro - Public transport graphing
     $ cpanm Map::Metro::Plugin::Map::Stockholm
 
     # And then
-    my $graph = Map::Metro->new('Stockholm')->parse;
+    my $graph = Map::Metro->new('Stockholm', hooks => ['PrettyPrinter'])->parse;
 
     my $routing = $graph->routes_for('Universitetet', 'Kista');
-    print $routing->to_text;
 
 prints
 
     From Universitetet to Kista
-    =========================
+    ===========================
 
     -- Route 1 (cost 15) ----------
     [   T14 ] Universitetet
@@ -137,12 +147,15 @@ The purpose of this distribution is to find the shortest L<unique|/"What is a un
 
 =head2 Methods
 
-=head3 new($city)
+=head3 new($city, hooks => [])
 
 B<C<$city>>
 
 The name of the city you want to search connections in. Mandatory, unless you are only going to call L</"available_maps">.
 
+B<C<$hooks>>
+
+Array reference of L<Hooks|Map::Metro::Hook> that listens for events.
 
 =head3 parse()
 

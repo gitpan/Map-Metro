@@ -18,6 +18,7 @@ lib/Map/Metro/Cmd/Lines.pm
 lib/Map/Metro/Cmd/MetroToTube.pm
 lib/Map/Metro/Cmd/Route.pm
 lib/Map/Metro/Cmd/Stations.pm
+lib/Map/Metro/Emitter.pm
 lib/Map/Metro/Exception.pm
 lib/Map/Metro/Exception/DuplicateStationName.pm
 lib/Map/Metro/Exception/IllegalConstructorArguments.pm
@@ -36,6 +37,8 @@ lib/Map/Metro/Graph/Segment.pm
 lib/Map/Metro/Graph/Station.pm
 lib/Map/Metro/Graph/Step.pm
 lib/Map/Metro/Graph/Transfer.pm
+lib/Map/Metro/Hook.pm
+lib/Map/Metro/Plugin/Hook/PrettyPrinter.pm
 lib/Map/Metro/Plugin/Map.pm
 lib/Map/Metro/Shim.pm
 lib/Map/Metro/Standard.pm
