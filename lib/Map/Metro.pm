@@ -2,7 +2,7 @@ use 5.20.0;
 use Map::Metro::Standard;
 
 package Map::Metro {
-$Map::Metro::VERSION = '0.1702';
+$Map::Metro::VERSION = '0.1800';
 use Moose;
     use Module::Pluggable search_path => ['Map::Metro::Plugin::Map'], require => 1, sub_name => 'system_maps';
     use MooseX::AttributeShortcuts;
@@ -262,6 +262,10 @@ Currently only Perl 5.20+ is supported.
 L<Map::Tube> works with Perl 5.6.
 
 Included in this distribution is a script to convert C<Map::Metro> maps into C<Map::Tube> maps, if L<Map::Tube> misses one you need.
+
+=head1 BUGS & ISSUES
+
+The repository and issue tracker is at: L<https://github.com/Csson/p5-Map-Metro>
 
 =head1 SEE ALSO
 
