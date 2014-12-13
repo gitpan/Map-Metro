@@ -1,11 +1,12 @@
 use Map::Metro::Standard;
 
 package Map::Metro::Emitter {
-$Map::Metro::Emitter::VERSION = '0.1800';
+$Map::Metro::Emitter::VERSION = '0.1801';
 use Moose;
     use Kavorka;
     use List::AllUtils 'none';
     use Types::Standard -types;
+    use Map::Metro::Hook;
 
     use Module::Pluggable search_path => ['Map::Metro::Plugin::Hook'], require => 1, sub_name => 'found_plugins';
 
