@@ -23,8 +23,10 @@ no_index:
     - eg
     - examples
 requires:
+  Data::Dump::Streamer: '0'
   Eponymous::Hash: '0'
   Graph: '0'
+  IO::Interactive: '0'
   List::AllUtils: '0'
   List::Compare: '0'
   Module::Pluggable: '0'
@@ -32,12 +34,14 @@ requires:
   Moose: '0'
   MooseX::App: '0'
   MooseX::AttributeShortcuts: '0'
-  MooseX::Object::Pluggable: '0'
+  MooseX::SetOnce: '0'
   String::Trim: '0'
   Syntax::Collector: '0'
   Syntax::Keyword::Junction: '0'
+  Term::Size::Any: '0'
   Throwable::X: '0'
   Types::Path::Tiny: '0'
+  XML::Writer: '0'
   experimental: '0'
   perl: '5.020000'
-version: '0.1701'
+version: '0.1702'
