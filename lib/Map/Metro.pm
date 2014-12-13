@@ -2,7 +2,7 @@ use 5.20.0;
 use Map::Metro::Standard;
 
 package Map::Metro {
-$Map::Metro::VERSION = '0.1801';
+$Map::Metro::VERSION = '0.1802';
 use Moose;
     use Module::Pluggable search_path => ['Map::Metro::Plugin::Map'], require => 1, sub_name => 'system_maps';
     use MooseX::AttributeShortcuts;
@@ -117,7 +117,7 @@ Map::Metro - Public transport graphing
     # And then
     my $graph = Map::Metro->new('Stockholm', hooks => ['PrettyPrinter'])->parse;
 
-    my $routing = $graph->routes_for('Universitetet', 'Kista');
+    my $routing = $graph->routing_for('Universitetet', 'Kista');
 
 prints
 

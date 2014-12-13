@@ -1,5 +1,5 @@
 package Map::Metro::Plugin::Map;
-$Map::Metro::Plugin::Map::VERSION = '0.1801';
+$Map::Metro::Plugin::Map::VERSION = '0.1802';
 use Moose::Role;
 use Types::Path::Tiny 'AbsPath';
 

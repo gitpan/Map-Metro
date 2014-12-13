@@ -43,4 +43,4 @@ requires:
   XML::Writer: '0'
   experimental: '0'
   perl: '5.020000'
-version: '0.1801'
+version: '0.1802'
