@@ -1,7 +1,7 @@
 use feature ':5.20';
 
 package Map::Metro::Plugin::Hook::StreamStations {
-$Map::Metro::Plugin::Hook::StreamStations::VERSION = '0.1700';
+$Map::Metro::Plugin::Hook::StreamStations::VERSION = '0.1701';
 use Moose;
     use Types::Standard -types;
 

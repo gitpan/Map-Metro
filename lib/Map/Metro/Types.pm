@@ -1,4 +1,5 @@
-use Map::Metro::Standard::Moops;
+use feature ':5.20';
+use Moops;
 
 library  Map::Metro::Types
 
@@ -15,8 +16,6 @@ declares Connection,
          Step,
          Transfer
     {
-
-    use Type::Utils -all;
 
     class_type Connection   => { class => 'Map::Metro::Graph::Connection' };
     class_type Line         => { class => 'Map::Metro::Graph::Line' };
