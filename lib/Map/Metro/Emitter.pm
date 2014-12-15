@@ -1,7 +1,7 @@
 use Map::Metro::Standard;
 
 package Map::Metro::Emitter {
-$Map::Metro::Emitter::VERSION = '0.1802';
+$Map::Metro::Emitter::VERSION = '0.1803';
 use Moose;
     use Kavorka;
     use List::AllUtils 'none';
@@ -66,6 +66,9 @@ use Moose;
     }
     method before_add_routing($routing) {
         $self->emit('before_add_routing', $routing);
+    }
+    method before_start_routing {
+        $self->emit('before_start_routing');
     }
 
     method emit($event, @args) {

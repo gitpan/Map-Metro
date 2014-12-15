@@ -129,7 +129,18 @@ MORE INFORMATION
     All Routes between the two Stations are then put into a Routing, which
     is returned to the user.
 
-Status
+PERFORMANCE
+    During development of the Berlin map it was discovered that performance
+    on large maps suffered badly.
+
+    One stopgap measure to deal with this is to use Sereal to serialize the
+    graph object. Included are two commands, "serealize" and "deserealize".
+    On my machine the time spent searching for a route is reduced by 50-85%.
+    Larger maps, larger savings. It is currently not possible to add hooks
+    to serealizing graphs; the "deserealize" command works as if
+    PrettyPrinter was attached.
+
+STATUS
     This is somewhat experimental. I don't expect that the map file format
     will *break*, but it might be extended. Only the documented api should
     be relied on, though breaking changes might occur.

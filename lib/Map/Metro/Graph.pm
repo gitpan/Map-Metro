@@ -34,6 +34,11 @@ class Map::Metro::Graph using Moose {
             all_wanted_hook_plugins => 'elements',
         }
     );
+    has do_undiacritic => (
+        is => 'rw',
+        isa => Bool,
+        default => 1,
+    );
 
     has emit => (
         is => 'ro',
@@ -216,7 +221,7 @@ class Map::Metro::Graph using Moose {
         }
 
         my $id = $self->station_count + 1;
-        my $station = Map::Metro::Graph::Station->new(original_name => $name, eh $name, $id);
+        my $station = Map::Metro::Graph::Station->new(original_name => $name, do_undiacritic => $self->do_undiacritic, eh $name, $id);
 
         foreach my $another_name (@names) {
             if($another_name =~ m{^:(.+)}) {
@@ -226,7 +231,6 @@ class Map::Metro::Graph using Moose {
                 $station->add_alternative_name($another_name);
             }
         }
-
         $self->emit->before_add_station($station);
         $self->$next($station);
     }
@@ -539,7 +543,7 @@ class Map::Metro::Graph using Moose {
             my $existing_routing = $self->find_routing(sub { $_->origin_station->id == $origin_station->id && $_->destination_station->id == $destination_station->id });
             return $existing_routing if $existing_routing;
         }
-
+        $self->emit->before_start_routing;
         my $routing = Map::Metro::Graph::Routing->new(origin_station => $origin_station, destination_station => $destination_station);
 
         #* Find all lines going from origin station

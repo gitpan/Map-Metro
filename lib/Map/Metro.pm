@@ -2,7 +2,7 @@ use 5.20.0;
 use Map::Metro::Standard;
 
 package Map::Metro {
-$Map::Metro::VERSION = '0.1802';
+$Map::Metro::VERSION = '0.1803';
 use Moose;
     use Module::Pluggable search_path => ['Map::Metro::Plugin::Map'], require => 1, sub_name => 'system_maps';
     use MooseX::AttributeShortcuts;
@@ -22,6 +22,11 @@ use Moose;
         handles => {
             get_map => 'get',
         },
+    );
+    has do_undiacritic => (
+        is => 'rw',
+        isa => Bool,
+        default => 1,
     );
     has filepath => (
         is => 'rw',
@@ -77,7 +82,9 @@ use Moose;
 
             if(any { $_ eq $self->get_map(0) } @system_maps) {
                 my $mapclass = 'Map::Metro::Plugin::Map::'.$self->get_map(0);
-                $self->filepath($mapclass->new->mapfile);
+                my $mapobj = $mapclass->new;
+                $self->filepath($mapobj->mapfile);
+                $self->do_undiacritic($mapobj->do_undiacritic);
             }
         }
     }
@@ -91,7 +98,7 @@ use Moose;
     }
 
     sub parse($self) {
-        return Map::Metro::Graph->new(filepath => $self->filepath, wanted_hook_plugins => [$self->all_hooks])->parse;
+        return Map::Metro::Graph->new(filepath => $self->filepath, do_undiacritic => $self->do_undiacritic, wanted_hook_plugins => [$self->all_hooks])->parse;
     }
 
     sub available_maps($self) {
@@ -239,8 +246,14 @@ and turning them into L<Steps|Map::Metro::Graph::Step>, which we then add to the
 
 All L<Routes|Map::Metro::Graph::Route> between the two L<Stations|Map::Metro::Graph::Station> are then put into a L<Routing|Map::Metro::Graph::Routing>, which is returned to the user.
 
+=head1 PERFORMANCE
 
-=head1 Status
+During development of the L<Berlin|Map::Metro::Plugin::Map::Berlin> map it was discovered that performance on large maps suffered badly.
+
+One stopgap measure to deal with this is to use L<Sereal> to serialize the graph object. Included are two L<commands|Metro::Map::Cmd>, C<serealize> and C<deserealize>. On my machine the time spent searching for a route
+is reduced by 50-85%. Larger maps, larger savings. It is currently not possible to add hooks to serealizing graphs; the C<deserealize> command works as if L<PrettyPrinter|Map::Metro::Plugin::Hook::PrettyPrinter> was attached.
+
+=head1 STATUS
 
 This is somewhat experimental. I don't expect that the map file format will I<break>, but it might be
 extended. Only the documented api should be relied on, though breaking changes might occur.
