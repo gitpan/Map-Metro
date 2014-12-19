@@ -47,4 +47,8 @@ requires:
   XML::Writer: '0'
   experimental: '0'
   perl: '5.020000'
-version: '0.1803'
+resources:
+  bugtracker: https://github.com/Csson/p5-Map-Metro/issues
+  homepage: https://github.com/Csson/p5-Map-Metro
+  repository: https://github.com/Csson/p5-Map-Metro.git
+version: '0.1804'
