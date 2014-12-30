@@ -1,7 +1,7 @@
 use 5.20.0;
 
 package Map::Metro::Standard::Moops {
-$Map::Metro::Standard::Moops::VERSION = '0.1804';
+$Map::Metro::Standard::Moops::VERSION = '0.1900';
 use base 'Moops';
     use List::AllUtils();
     use experimental();

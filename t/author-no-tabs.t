@@ -34,6 +34,7 @@ my @files = (
     'lib/Map/Metro/Exception/IncompleteParse.pm',
     'lib/Map/Metro/Exception/LineIdContainsIllegalCharacter.pm',
     'lib/Map/Metro/Exception/LineIdDoesNotExistInLineList.pm',
+    'lib/Map/Metro/Exception/NeedSereal.pm',
     'lib/Map/Metro/Exception/StationIdDoesNotExist.pm',
     'lib/Map/Metro/Exception/StationNameDoesNotExistInStationList.pm',
     'lib/Map/Metro/Graph.pm',
