@@ -21,6 +21,7 @@ my @files = (
     'lib/Map/Metro/Cmd/Available.pm',
     'lib/Map/Metro/Cmd/Deserealize.pm',
     'lib/Map/Metro/Cmd/Dump.pm',
+    'lib/Map/Metro/Cmd/Graphviz.pm',
     'lib/Map/Metro/Cmd/Hoist.pm',
     'lib/Map/Metro/Cmd/Lines.pm',
     'lib/Map/Metro/Cmd/MetroToTube.pm',

@@ -38,6 +38,7 @@
       },
       "runtime" : {
          "recommends" : {
+            "GraphViz2" : "0",
             "Sereal::Decoder" : "0",
             "Sereal::Encoder" : "0"
          },
@@ -84,6 +85,6 @@
          "web" : "https://github.com/Csson/p5-Map-Metro"
       }
    },
-   "version" : "0.1901"
+   "version" : "0.2000"
 }
 

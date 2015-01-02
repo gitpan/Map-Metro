@@ -23,6 +23,7 @@ no_index:
     - eg
     - examples
 recommends:
+  GraphViz2: '0'
   Sereal::Decoder: '0'
   Sereal::Encoder: '0'
 requires:
@@ -51,4 +52,4 @@ resources:
   bugtracker: https://github.com/Csson/p5-Map-Metro/issues
   homepage: https://github.com/Csson/p5-Map-Metro
   repository: https://github.com/Csson/p5-Map-Metro.git
-version: '0.1901'
+version: '0.2000'
