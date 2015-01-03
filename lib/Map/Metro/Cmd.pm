@@ -1,7 +1,7 @@
 use Map::Metro::Standard;
 
 package Map::Metro::Cmd  {
-$Map::Metro::Cmd::VERSION = '0.2000';
+$Map::Metro::Cmd::VERSION = '0.2001';
 use MooseX::App qw/Config Color/;
 
     use MooseX::AttributeShortcuts;
