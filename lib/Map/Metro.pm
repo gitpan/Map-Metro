@@ -2,7 +2,7 @@ use 5.20.0;
 use Map::Metro::Standard;
 
 package Map::Metro {
-$Map::Metro::VERSION = '0.2001';
+$Map::Metro::VERSION = '0.2002';
 use Moose;
     use Module::Pluggable search_path => ['Map::Metro::Plugin::Map'], require => 1, sub_name => 'system_maps';
     use MooseX::AttributeShortcuts;
@@ -27,6 +27,7 @@ use Moose;
         is => 'ro',
         traits => ['Array'],
         isa => ArrayRef,
+        default => sub { [] },
         handles => {
             add_mapclass => 'push',
             get_mapclass => 'get',
