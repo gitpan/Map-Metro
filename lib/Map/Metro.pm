@@ -2,11 +2,10 @@ use 5.20.0;
 use Map::Metro::Standard;
 
 package Map::Metro {
-$Map::Metro::VERSION = '0.2002';
+$Map::Metro::VERSION = '0.2100';
 use Moose;
     use Module::Pluggable search_path => ['Map::Metro::Plugin::Map'], require => 1, sub_name => 'system_maps';
     use MooseX::AttributeShortcuts;
-    use aliased 'Map::Metro::Exception::IllegalConstructorArguments';
     use Types::Standard -types;
     use Types::Path::Tiny -types;
     use List::AllUtils 'any';
@@ -94,9 +93,13 @@ use Moose;
                                } split '::' => $string;
     }
 
-    sub parse($self) {
+    sub parse($self, :$override_line_change_weight) {
         return $self->get_mapclass(0)->deserealized if $self->get_mapclass(0)->has_serealfile && defined $self->get_mapclass(0)->serealfile && !$self->hook_count;
-        return Map::Metro::Graph->new(filepath => $self->get_mapclass(0)->maplocation, do_undiacritic => $self->get_mapclass(0)->do_undiacritic, wanted_hook_plugins => [$self->all_hooks])->parse;
+        return Map::Metro::Graph->new(filepath => $self->get_mapclass(0)->maplocation,
+                                      do_undiacritic => $self->get_mapclass(0)->do_undiacritic,
+                                      wanted_hook_plugins => [$self->all_hooks],
+                                      defined $override_line_change_weight ? (override_line_change_weight => $override_line_change_weight) : (),
+                                )->parse;
     }
 
     sub available_maps($self) {
@@ -123,6 +126,9 @@ Map::Metro - Public transport graphing
     my $graph = Map::Metro->new('Stockholm', hooks => ['PrettyPrinter'])->parse;
 
     my $routing = $graph->routing_for('Universitetet', 'Kista');
+
+    # or in a terminal
+    $ map-metro.pl route Stockholm Universitetet Kista
 
 prints
 
@@ -154,6 +160,8 @@ prints
 =head1 DESCRIPTION
 
 The purpose of this distribution is to find the shortest L<unique|/"What is a unique path?"> route/routes between two stations in a transport network.
+
+See L<Task::MapMetro::Maps> for a list of released maps.
 
 =head2 Methods
 
@@ -221,7 +229,6 @@ L<Map::Metro::Graph::Step> - Defines a MMG::Step.
 
 L<Map::Metro::Graph::Transfer> - Defines a MMG::Transfer.
 
-
 =head2 Hierarchy
 
 The following is a conceptual overview of the various parts of a graph:
@@ -246,10 +253,7 @@ All L<Routes|Map::Metro::Graph::Route> between the two L<Stations|Map::Metro::Gr
 
 =head1 PERFORMANCE
 
-During development of the L<Berlin|Map::Metro::Plugin::Map::Berlin> map it was discovered that performance on large maps suffered badly.
-
-One stopgap measure to deal with this is to use L<Sereal> to serialize the graph object. Included are two L<commands|Metro::Map::Cmd>, C<serealize> and C<deserealize>. On my machine the time spent searching for a route
-is reduced by 50-85%. Larger maps, larger savings. It is currently not possible to add hooks to serealizing graphs; the C<deserealize> command works as if L<PrettyPrinter|Map::Metro::Plugin::Hook::PrettyPrinter> was attached.
+Since 0.2100 performance is less than an issue than it used to be, but it can still be improved. Prior to this version the entire network was analyzed up-front. This is unnecessary when searching one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see L<asps|Map::Metro::Graph/"asps()">.
 
 =head1 STATUS
 
@@ -258,30 +262,33 @@ extended. Only the documented api should be relied on, though breaking changes m
 
 For all maps in the Map::Metro::Plugin::Map namespace (unless noted):
 
-=over 4
+* These maps are not an official source. Use accordingly.
 
-=item These maps are not an official source. Use accordingly.
-
-=item Each map should state its own specific status with regards to coverage of the transport network.
-
-=back
+* There should be a note regarding what routes the map covers.
 
 =head1 COMPATIBILITY
 
 Currently only Perl 5.20+ is supported.
 
-L<Map::Tube> works with Perl 5.6.
+=head1 Map::Metro or Map::Tube?
 
-Included in this distribution is a script to convert C<Map::Metro> maps into C<Map::Tube> maps, if L<Map::Tube> misses one you need.
+L<Map::Tube> is the main alternative to C<Map::Metro>. They both have their strong and weak points.
 
-=head1 BUGS & ISSUES
+* Map::Tube is faster.
 
-The repository and issue tracker is at: L<https://github.com/Csson/p5-Map-Metro>
+* Map::Tube is more stable: It has been on Cpan for a long time, and is under active development.
+
+* Map::Metro has (in my opinion) a better map format.
+
+* Map::Metro supports eg. transfers between stations.
+
+* See L<Task::MapMetro::Maps> and L<Task::Map::Tube> for available maps.
+
+* It is possible to convert Map::Metro maps into Map::Tube maps using L<map-metro.pl|Map::Metro::Cmd/"map-metro.pl metro_to_tube $city">.
 
 =head1 SEE ALSO
 
 L<Map::Tube>
-
 
 =head1 AUTHOR
 

@@ -1,7 +1,7 @@
 use 5.14.0;
 
 package Map::Metro::Plugin::Map;
-$Map::Metro::Plugin::Map::VERSION = '0.2002';
+$Map::Metro::Plugin::Map::VERSION = '0.2100';
 use Moose::Role;
 use MooseX::AttributeShortcuts;
 use File::ShareDir 'dist_dir';
@@ -235,7 +235,9 @@ Start a distribution called C<Map::Metro::Plugin::Map::$city>.
 
 =head2 With Dist::Zilla
 
-The easiest way to do that is to use L<Dist::Zilla> with L<Dist::Zilla::MintingProfile::MapMetro::Map>:
+The easiest way to do that is to use L<Dist::Zilla> with L<Dist::Zilla::MintingProfile::MapMetro::Map>. See also L<Task::MapMetro::Dev>.
+
+    $ dzil new -P MapMetro::Map  Map::Metro::Plugin::Map::TheCity
 
 =head2 Without Dist::Zilla
 

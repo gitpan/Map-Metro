@@ -1,7 +1,7 @@
 use Map::Metro::Standard;
 
 package Map::Metro::Emitter {
-$Map::Metro::Emitter::VERSION = '0.2002';
+$Map::Metro::Emitter::VERSION = '0.2100';
 use Moose;
     use Kavorka;
     use List::AllUtils 'none';

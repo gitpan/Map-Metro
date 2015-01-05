@@ -10,6 +10,9 @@ SYNOPSIS
 
         my $routing = $graph->routing_for('Universitetet', 'Kista');
 
+        # or in a terminal
+        $ map-metro.pl route Stockholm Universitetet Kista
+
     prints
 
         From Universitetet to Kista
@@ -40,6 +43,8 @@ SYNOPSIS
 DESCRIPTION
     The purpose of this distribution is to find the shortest unique
     route/routes between two stations in a transport network.
+
+    See Task::MapMetro::Maps for a list of released maps.
 
   Methods
    new($city, hooks => [])
@@ -130,15 +135,11 @@ MORE INFORMATION
     is returned to the user.
 
 PERFORMANCE
-    During development of the Berlin map it was discovered that performance
-    on large maps suffered badly.
-
-    One stopgap measure to deal with this is to use Sereal to serialize the
-    graph object. Included are two commands, "serealize" and "deserealize".
-    On my machine the time spent searching for a route is reduced by 50-85%.
-    Larger maps, larger savings. It is currently not possible to add hooks
-    to serealizing graphs; the "deserealize" command works as if
-    PrettyPrinter was attached.
+    Since 0.2100 performance is less than an issue than it used to be, but
+    it can still be improved. Prior to this version the entire network was
+    analyzed up-front. This is unnecessary when searching one (or a few)
+    routes. For long-running applications it is still possible to
+    pre-calculate all paths, see asps.
 
 STATUS
     This is somewhat experimental. I don't expect that the map file format
@@ -147,21 +148,30 @@ STATUS
 
     For all maps in the Map::Metro::Plugin::Map namespace (unless noted):
 
-    These maps are not an official source. Use accordingly.
-    Each map should state its own specific status with regards to coverage
-    of the transport network.
+    * These maps are not an official source. Use accordingly.
+
+    * There should be a note regarding what routes the map covers.
 
 COMPATIBILITY
     Currently only Perl 5.20+ is supported.
 
-    Map::Tube works with Perl 5.6.
+Map::Metro or Map::Tube?
+    Map::Tube is the main alternative to "Map::Metro". They both have their
+    strong and weak points.
 
-    Included in this distribution is a script to convert "Map::Metro" maps
-    into "Map::Tube" maps, if Map::Tube misses one you need.
+    * Map::Tube is faster.
 
-BUGS & ISSUES
-    The repository and issue tracker is at:
-    <https://github.com/Csson/p5-Map-Metro>
+    * Map::Tube is more stable: It has been on Cpan for a long time, and is
+    under active development.
+
+    * Map::Metro has (in my opinion) a better map format.
+
+    * Map::Metro supports eg. transfers between stations.
+
+    * See Task::MapMetro::Maps and Task::Map::Tube for available maps.
+
+    * It is possible to convert Map::Metro maps into Map::Tube maps using
+    map-metro.pl.
 
 SEE ALSO
     Map::Tube
