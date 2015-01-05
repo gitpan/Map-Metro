@@ -1,7 +1,7 @@
 use 5.14.0;
 
 package Map::Metro::Plugin::Map;
-$Map::Metro::Plugin::Map::VERSION = '0.2100';
+$Map::Metro::Plugin::Map::VERSION = '0.2101';
 use Moose::Role;
 use MooseX::AttributeShortcuts;
 use File::ShareDir 'dist_dir';
