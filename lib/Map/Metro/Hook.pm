@@ -1,5 +1,9 @@
 use Map::Metro::Standard::Moops;
 
+our $VERSION = '0.2200'; # VERSION
+# PODNAME: Map::Metro::Hook
+# ABSTRACT: Hook into Map::Metro
+
 class Map::Metro::Hook using Moose {
 
     use Type::Tiny::Enum;
@@ -26,13 +30,19 @@ class Map::Metro::Hook using Moose {
 
 }
 
+__END__
 
+=pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
 Map::Metro::Hook - Hook into Map::Metro
+
+=head1 VERSION
+
+Version 0.2200, released 2015-01-08.
 
 =head1 SYNOPSIS
 
@@ -59,7 +69,6 @@ All hooks get the hook class instance as its first parameter, and can beyond tha
 
 There are currently two hooks (events) available:
 
-
 =head3 before_add_station($plugin, $station)
 
 C<$station>
@@ -68,7 +77,6 @@ The L<Map::Metro::Graph::Station> object that is about to be added.
 
 This event fires right before the station is added to the L<Map::Metro::Graph> object. Especially useful for enabling
 translations of station names.
-
 
 =head3 before_add_routing($plugin, $routing)
 
@@ -81,7 +89,6 @@ This event fires after a routing has been completed (all routes between two L<St
 This is useful for printing routings as they are found rather than waiting until all routings are found.
 
 Used by the bundled L<PrettyPrinter|Map::Metro::Plugin::Hook::PrettyPrinter> hook. That also serves as a good template for customized hooks.
-
 
 =head2 Custom hooks
 
@@ -145,18 +152,23 @@ You can then access this C<station_names> attribute like this:
     my @station_names = $station_streamer->all_station_names;
     my $special_station = $station_streamer->get_station_name(7);
 
+=head1 SOURCE
+
+L<https://github.com/Csson/p5-Map-Metro>
+
+=head1 HOMEPAGE
+
+L<https://metacpan.org/release/Map-Metro>
 
 =head1 AUTHOR
 
-Erik Carlsson E<lt>info@code301.comE<gt>
+Erik Carlsson <info@code301.com>
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
-Copyright 2014 - Erik Carlsson
+This software is copyright (c) 2015 by Erik Carlsson.
 
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut

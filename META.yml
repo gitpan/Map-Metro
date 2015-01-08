@@ -4,7 +4,6 @@ author:
   - 'Erik Carlsson <info@code301.com>'
 build_requires:
   Syntax::Collector: '0'
-  Test::NoTabs: '0'
 configure_requires:
   Module::Build::Tiny: '0.039'
 dynamic_config: 0
@@ -24,14 +23,13 @@ no_index:
     - examples
 recommends:
   GraphViz2: '0'
-  Sereal::Decoder: '0'
-  Sereal::Encoder: '0'
 requires:
   Data::Dump::Streamer: '0'
   Eponymous::Hash: '0'
   File::ShareDir: '0'
   Graph: '0'
   IO::Interactive: '0'
+  Kavorka: '0'
   List::AllUtils: '0'
   List::Compare: '0'
   Module::Pluggable: '0'
@@ -40,17 +38,23 @@ requires:
   MooseX::App: '0'
   MooseX::AttributeShortcuts: '0'
   MooseX::SetOnce: '0'
+  Path::Tiny: '0'
   String::Trim: '0'
+  Sub::Exporter: '0'
   Syntax::Collector: '0'
   Term::Size::Any: '0'
   Text::Undiacritic: '0'
   Throwable::X: '0'
+  Type::Tiny::Enum: '0'
   Types::Path::Tiny: '0'
+  Types::Standard: '0'
   XML::Writer: '0'
   experimental: '0'
+  namespace::clean: '0'
   perl: '5.020000'
+  'true': '0'
 resources:
   bugtracker: https://github.com/Csson/p5-Map-Metro/issues
-  homepage: https://github.com/Csson/p5-Map-Metro
+  homepage: https://metacpan.org/release/Map-Metro
   repository: https://github.com/Csson/p5-Map-Metro.git
-version: '0.2101'
+version: '0.2200'

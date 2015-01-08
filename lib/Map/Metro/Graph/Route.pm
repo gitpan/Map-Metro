@@ -1,5 +1,9 @@
 use Map::Metro::Standard::Moops;
 
+our $VERSION = '0.2200'; # VERSION
+# PODNAME: Map::Metro::Graph::Route
+# ABSTRACT: What is a route?
+
 class Map::Metro::Graph::Route using Moose {
 
     has steps => (
@@ -57,11 +61,17 @@ class Map::Metro::Graph::Route using Moose {
 
 __END__
 
-=encoding utf-8
+=pod
+
+=encoding UTF-8
 
 =head1 NAME
 
 Map::Metro::Graph::Route - What is a route?
+
+=head1 VERSION
+
+Version 0.2200, released 2015-01-08.
 
 =head1 DESCRIPTION
 
@@ -73,23 +83,27 @@ A route is a specific sequence of L<Steps|Map::Metro::Graph::Step> from one L<Li
 
 Returns an array of the L<Steps|Map::Metro::Graph::Step> in the route, in the order they are travelled.
 
-
 =head2 weight()
 
 Returns an integer representing the total 'cost' of all L<Connections|Map::Metro::Graph::Connection> on this route.
 
+=head1 SOURCE
+
+L<https://github.com/Csson/p5-Map-Metro>
+
+=head1 HOMEPAGE
+
+L<https://metacpan.org/release/Map-Metro>
 
 =head1 AUTHOR
 
-Erik Carlsson E<lt>info@code301.comE<gt>
+Erik Carlsson <info@code301.com>
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
-Copyright 2014 - Erik Carlsson
+This software is copyright (c) 2015 by Erik Carlsson.
 
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut

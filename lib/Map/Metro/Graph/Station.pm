@@ -1,5 +1,9 @@
 use Map::Metro::Standard::Moops;
 
+our $VERSION = '0.2200'; # VERSION
+# PODNAME: Map::Metro::Graph::Station
+# ABSTRACT: What is a station?
+
 class Map::Metro::Graph::Station using Moose {
 
     use Text::Undiacritic 'undiacritic';
@@ -143,11 +147,17 @@ class Map::Metro::Graph::Station using Moose {
 
 __END__
 
-=encoding utf-8
+=pod
+
+=encoding UTF-8
 
 =head1 NAME
 
 Map::Metro::Graph::Station - What is a station?
+
+=head1 VERSION
+
+Version 0.2200, released 2015-01-08.
 
 =head1 DESCRIPTION
 
@@ -159,11 +169,9 @@ Stations represents actual stations, and are used both during the graph building
 
 Returns the internal station id. Do not depend on this between executions.
 
-
 =head2 name()
 
 Returns the station name given in the parsed map file.
-
 
 =head2 lines()
 
@@ -173,17 +181,23 @@ Returns an array of all L<Lines|Map::Metro::Graph::Line> passing through the sta
 
 Returns an array of all L<Stations|Map::Metro::Graph::Station> directly (on at least one line) connected to this station.
 
+=head1 SOURCE
+
+L<https://github.com/Csson/p5-Map-Metro>
+
+=head1 HOMEPAGE
+
+L<https://metacpan.org/release/Map-Metro>
+
 =head1 AUTHOR
 
-Erik Carlsson E<lt>info@code301.comE<gt>
+Erik Carlsson <info@code301.com>
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
-Copyright 2014 - Erik Carlsson
+This software is copyright (c) 2015 by Erik Carlsson.
 
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut

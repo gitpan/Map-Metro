@@ -1,5 +1,9 @@
 use Map::Metro::Standard::Moops;
 
+our $VERSION = '0.2200'; # VERSION
+# PODNAME: Map::Metro::Graph::Line
+# ABSTRACT: What is a line?
+
 class Map::Metro::Graph::Line using Moose {
 
     has id => (
@@ -38,11 +42,17 @@ class Map::Metro::Graph::Line using Moose {
 
 __END__
 
-=encoding utf-8
+=pod
+
+=encoding UTF-8
 
 =head1 NAME
 
 Map::Metro::Graph::Line - What is a line?
+
+=head1 VERSION
+
+Version 0.2200, released 2015-01-08.
 
 =head1 DESCRIPTION
 
@@ -54,7 +64,6 @@ Lines are currently only placeholders to identify the concept of a line. They do
 
 Returns the line id given in the parsed map file.
 
-
 =head2 name()
 
 Returns the line name given in the parsed map file.
@@ -63,18 +72,23 @@ Returns the line name given in the parsed map file.
 
 Returns the line description given in the parsed map file.
 
+=head1 SOURCE
+
+L<https://github.com/Csson/p5-Map-Metro>
+
+=head1 HOMEPAGE
+
+L<https://metacpan.org/release/Map-Metro>
 
 =head1 AUTHOR
 
-Erik Carlsson E<lt>info@code301.comE<gt>
+Erik Carlsson <info@code301.com>
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
-Copyright 2014 - Erik Carlsson
+This software is copyright (c) 2015 by Erik Carlsson.
 
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut

@@ -1,9 +1,12 @@
 use 5.20.0;
 use Map::Metro::Standard;
 
+our $VERSION = '0.2200'; # VERSION
+# ABSTRACT: Public transport graphing
+
 package Map::Metro {
-$Map::Metro::VERSION = '0.2101';
-use Moose;
+
+    use Moose;
     use Module::Pluggable search_path => ['Map::Metro::Plugin::Map'], require => 1, sub_name => 'system_maps';
     use MooseX::AttributeShortcuts;
     use Types::Standard -types;
@@ -103,7 +106,6 @@ use Moose;
         my $self = shift;
         my %args = @_;
 
-        return $self->get_mapclass(0)->deserealized if $self->get_mapclass(0)->has_serealfile && defined $self->get_mapclass(0)->serealfile && !$self->hook_count;
         return Map::Metro::Graph->new(filepath => $self->get_mapclass(0)->maplocation,
                                       do_undiacritic => $self->get_mapclass(0)->do_undiacritic,
                                       wanted_hook_plugins => [$self->all_hooks],
@@ -119,13 +121,17 @@ use Moose;
 
 __END__
 
+=pod
+
 =encoding utf-8
 
 =head1 NAME
 
 Map::Metro - Public transport graphing
 
-=for html <p><a style="float: left;" href="https://travis-ci.org/Csson/p5-Map-Metro"><img src="https://travis-ci.org/Csson/p5-Map-Metro.svg?branch=master">&nbsp;</a>
+=head1 VERSION
+
+Version 0.2200, released 2015-01-08.
 
 =head1 SYNOPSIS
 
@@ -189,12 +195,9 @@ Array reference of L<Hooks|Map::Metro::Hook> that listens for events.
 
 Returns a L<Map::Metro::Graph> object containing the entire graph.
 
-
 =head3 available_maps()
 
 Returns an array reference containing the names of all Map::Metro maps installed on the system.
-
-
 
 =head2 What is a unique path?
 
@@ -209,7 +212,6 @@ If the starting station and finishing station...
 ...are on different lines a transfer will take place at a shared station. No matter how many shared stations there are, there will only be one route returned (but which transfer station is used can differ between queries).
 
 ...has no shared stations, the shortest route/routes will be returned.
-
 
 =head1 MORE INFORMATION
 
@@ -263,7 +265,7 @@ All L<Routes|Map::Metro::Graph::Route> between the two L<Stations|Map::Metro::Gr
 
 =head1 PERFORMANCE
 
-Since 0.2100 performance is less than an issue than it used to be, but it can still be improved. Prior to this version the entire network was analyzed up-front. This is unnecessary when searching one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see L<asps|Map::Metro::Graph/"asps()">.
+Since 0.2200 performance is less than an issue than it used to be, but it can still be improved. Prior to this version the entire network was analyzed up-front. This is unnecessary when searching one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see L<asps|Map::Metro::Graph/"asps()">.
 
 =head1 STATUS
 
@@ -300,17 +302,23 @@ L<Map::Tube> is the main alternative to C<Map::Metro>. They both have their stro
 
 L<Map::Tube>
 
+=head1 SOURCE
+
+L<https://github.com/Csson/p5-Map-Metro>
+
+=head1 HOMEPAGE
+
+L<https://metacpan.org/release/Map-Metro>
+
 =head1 AUTHOR
 
-Erik Carlsson E<lt>info@code301.comE<gt>
+Erik Carlsson <info@code301.com>
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
-Copyright 2014 - Erik Carlsson
+This software is copyright (c) 2015 by Erik Carlsson.
 
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut

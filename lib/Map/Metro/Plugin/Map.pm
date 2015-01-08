@@ -1,14 +1,16 @@
 use 5.14.0;
 
+our $VERSION = '0.2200'; # VERSION
+# ABSTRACT: How to make your own map
+
 package Map::Metro::Plugin::Map;
-$Map::Metro::Plugin::Map::VERSION = '0.2101';
+
 use Moose::Role;
 use MooseX::AttributeShortcuts;
 use File::ShareDir 'dist_dir';
 use Path::Tiny;
 use Types::Standard -types;
 use Types::Path::Tiny -types;
-use Map::Metro::Exception::NeedSereal;
 
 has mapfile => (
     is => 'ro',
@@ -21,13 +23,6 @@ has do_undiacritic => (
     isa => Bool,
     default => 1,
 );
-has serealfile => (
-    is => 'rw',
-    isa => Maybe[AbsPath],
-    lazy => 1,
-    builder => 1,
-    predicate => 1,
-);
 has hooks => (
     is => 'ro',
     isa => ArrayRef[ Str ],
@@ -37,11 +32,7 @@ has hooks => (
         all_hooks => 'elements',
     },
 );
-sub BUILD {
-    my $self = shift;
-    $self->serealfile;
-    return $self;
-}
+
 sub mapdir {
     my $self = shift;
     return $self->mapfile->parent if $self->mapfile->is_absolute; # work with old api
@@ -55,30 +46,6 @@ sub maplocation {
     return $self->mapdir->child($self->mapfile);
 }
 
-
-sub serealfilename {
-    my $self = shift;
-    my $version = $self->version;
-    $version =~ s{[^\d.]}{}g;
-
-    my $mapname = $self->maplocation->basename;
-    return $self->mapdir->child("$mapname.$version.sereal")->absolute;
-}
-
-sub _build_serealfile {
-    my $self = shift;
-    return $self->serealfilename->absolute if $self->serealfilename->exists;
-}
-sub deserealized {
-    my $self = shift;
-
-    eval "use Sereal::Decoder qw/sereal_decode_with_object/";
-    die $@ if $@;
-    my $contents = $self->serealfile->slurp;
-    my $serealizer = Sereal::Decoder->new;
-    my $graph = sereal_decode_with_object($serealizer, $contents);
-    return $graph;
-}
 sub version {
     my $self = shift;
     return 0 if $self->mapfile->is_absolute; # work with old api when we had no map_version()
@@ -88,11 +55,19 @@ sub version {
 
 1;
 
+__END__
+
+=pod
+
 =encoding utf-8
 
 =head1 NAME
 
 Map::Metro::Plugin::Map - How to make your own map
+
+=head1 VERSION
+
+Version 0.2200, released 2015-01-08.
 
 =head1 SYNOPSIS
 
@@ -136,7 +111,6 @@ Map::Metro::Plugin::Map - How to make your own map
     19|Gullmarsplan|Globen
     7|Sergels torg|Nybroplan
 
-
 =head1 DESCRIPTION
 
 It is straightforward to create a map file. It consists of four parts:
@@ -144,7 +118,6 @@ It is straightforward to create a map file. It consists of four parts:
 =head2 --stations
 
 This is a list of all stations in the network. Currently only one value per line. Don't use C<|> in station names.
-
 
 =head2 --transfers
 
@@ -169,7 +142,6 @@ The options in turn is a comma separated list of colon separated key-value pairs
 
 =back
 
-
 =head2 --lines
 
 This is a list of all lines in the network. Three values per line (delimited by C<|>):
@@ -189,8 +161,6 @@ This is a list of all lines in the network. Three values per line (delimited by 
 * width. Integer. Can be used by visualization tools to give lines different widths, for example differentiate different types of transport.
 
 =back
-
-
 
 =head2 --segments
 
@@ -274,17 +244,23 @@ By default, station names with diacritics get their un-diacritic form added as a
         default => 0,
     );
 
+=head1 SOURCE
+
+L<https://github.com/Csson/p5-Map-Metro>
+
+=head1 HOMEPAGE
+
+L<https://metacpan.org/release/Map-Metro>
+
 =head1 AUTHOR
 
-Erik Carlsson E<lt>info@code301.comE<gt>
+Erik Carlsson <info@code301.com>
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
-Copyright 2014 - Erik Carlsson
+This software is copyright (c) 2015 by Erik Carlsson.
 
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut

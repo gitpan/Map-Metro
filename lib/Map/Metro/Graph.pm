@@ -1,5 +1,9 @@
 use Map::Metro::Standard::Moops;
 
+our $VERSION = '0.2200'; # VERSION
+# PODNAME: Map::Metro::Graph
+# ABSTRACT: An entire graph
+
 class Map::Metro::Graph using Moose {
 
     use Graph;
@@ -194,7 +198,6 @@ class Map::Metro::Graph using Moose {
     method parse {
         $self->build_network;
         $self->construct_connections;
-        $self->calculate_shortest_paths;
 
         return $self;
     }
@@ -635,11 +638,17 @@ class Map::Metro::Graph using Moose {
 
 __END__
 
-=encoding utf-8
+=pod
+
+=encoding UTF-8
 
 =head1 NAME
 
 Map::Metro::Graph - An entire graph
+
+=head1 VERSION
+
+Version 0.2200, released 2015-01-08.
 
 =head1 SYNOPSIS
 
@@ -683,11 +692,9 @@ Mandatory. The finishing station; can be either a station id (integer), or a sta
 
 Returns a L<Map::Metro::Graph::Routing> object.
 
-
 =head3 all_routes()
 
 Returns an array reference of L<Map::Metro::Graph::Routing> objects containing every unique route in the network.
-
 
 =head3 asps()
 
@@ -701,19 +708,23 @@ Call this method after creation if you prefer long startup times but faster sear
 
 This returns the complete L<Graph> object created from parsing the map.
 
+=head1 SOURCE
+
+L<https://github.com/Csson/p5-Map-Metro>
+
+=head1 HOMEPAGE
+
+L<https://metacpan.org/release/Map-Metro>
+
 =head1 AUTHOR
 
-Erik Carlsson E<lt>info@code301.comE<gt>
+Erik Carlsson <info@code301.com>
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
-Copyright 2014 - Erik Carlsson
+This software is copyright (c) 2015 by Erik Carlsson.
 
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-
